@@ -2,20 +2,21 @@
   "version": 2,
   "builds": [
     {
-      "src": "./server/index.js",
+      "src": "./backend/index.js",
       "use": "@vercel/node"
     },
     {
-      "src": "./client/package.json",
+      "src": "./frontend/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
     }
   ],
   "rewrites": [
-    { "source": "/auth/(.*)", "destination": "/server/index.js" },
-    { "source": "/services/(.*)", "destination": "/server/index.js" },
-    { "source": "/appointments/(.*)", "destination": "/server/index.js" },
-    { "source": "/reviews/(.*)", "destination": "/server/index.js" },
+    { "source": "/auth/(.*)", "destination": "/backend/index.js" },
+    { "source": "/services/(.*)", "destination": "/backend/index.js" },
+    { "source": "/appointments/(.*)", "destination": "/backend/index.js" },
+    { "source": "/reviews/(.*)", "destination": "/backend/index.js" },
+    
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

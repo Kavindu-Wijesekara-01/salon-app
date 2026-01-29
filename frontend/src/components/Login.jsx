@@ -97,6 +97,9 @@ const Login = ({ setAuth }) => {
           >
             Sign In
           </button>
+          <Link to="/forgot-password" className="text-blue-500 text-sm mt-2 block text-center">
+            Forgot Password?
+          </Link>
         </form>
 
         <p className="mt-6 text-center text-gray-400 text-sm">

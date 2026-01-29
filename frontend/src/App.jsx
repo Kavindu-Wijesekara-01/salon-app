@@ -12,6 +12,8 @@ import Footer from './components/Footer'; // Footer Import කළා
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminDashboard from './components/AdminDashboard';
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -78,6 +80,8 @@ const App = () => {
               path="/admin-dashboard" 
               element={isAuthenticated ? <AdminDashboard setAuth={setAuth} /> : <Navigate to="/login" />} 
           />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         </Routes>
       </div>

@@ -21,6 +21,7 @@ app.use("/services", require("./routes/services"));
 
 // 4. Reviews (Customer Feedbacks)
 app.use("/reviews", require("./routes/reviews"));
+app.use("/auth", require("./routes/forgotPassword"));
 
 
 // --- TEST ROUTE ---

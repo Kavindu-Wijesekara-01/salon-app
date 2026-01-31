@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # 1. DATABASE SERVICE (Local Docker DB)
+  db:
+    image: postgres:15
+    container_name: salon_db_docker
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: salon_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. BACKEND SERVICE
+  server:
+    build: ./backend
+    container_name: salon_server
+    ports:
+      - "5000:5000"
+    environment:
+      # මෙතන 'db' කියලා දෙන්නේ උඩ තියෙන service name එක නිසා
+      DATABASE_URL: postgres://postgres:mypassword@db:5432/salon_db
+      
+      # ඔයාගේ රහස්‍ය විස්තර මෙතන දාන්න
+      JWT_SECRET: cat123
+      EMAIL_USER: kavinduwijesekara12@gmail.com
+      EMAIL_PASS: jxbz ffrl vjmy mluc
+      NODE_ENV: development
+    depends_on:
+      - db
+
+  # 3. FRONTEND SERVICE
+  client:
+    build: ./frontend
+    container_name: salon_client
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:

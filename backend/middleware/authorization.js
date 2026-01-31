@@ -3,23 +3,26 @@ require("dotenv").config();
 
 module.exports = async (req, res, next) => {
   try {
-    // 1. Header එකෙන් Token එක ගැනීම
+    // 1. Header එකෙන් Token එක ගන්නවා
     const jwtToken = req.header("token");
 
-    // 2. Token එකක් නැත්නම් Error එකක් යැවීම
+    // Token එක නැත්නම් Error එකක් යවනවා
     if (!jwtToken) {
+      console.log("🚫 Auth Middleware: No Token Found in Header");
       return res.status(403).json("Not Authorize");
     }
 
-    // 3. Token එක Verify කිරීම
+    // 2. Token එක ඇත්තද කියලා බලනවා (Verify)
+    // වැදගත්: මෙතන process.env.JWT_SECRET හරියටම තියෙන්න ඕන
     const payload = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    // 4. User ID එක Request එකට එකතු කිරීම
     req.user = payload.user;
+    console.log("✅ Auth Middleware: Token Verified Successfully!");
     
-    next();
+    next(); // ඊළඟ පියවරට යන්න
+
   } catch (err) {
-    console.error(err.message);
+    console.error("💥 Auth Middleware Error:", err.message);
     return res.status(403).json("Not Authorize");
   }
 };
